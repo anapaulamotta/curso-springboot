@@ -2,6 +2,8 @@ package com.example.cursoSpring.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -33,14 +36,19 @@ public class Order implements Serializable{
 	@JoinColumn(name = "client_id")
 	private User client;
 	
+	@ManyToMany
+	@JoinColumn(name = "item_id")
+	private List<Product> items = new ArrayList<>();
+	
 	public Order() {
 	
 	}
 
-	public Order(Object object, Instant moment, OrderStatus orderStatus, User client) {
+	public Order(Object object, Instant moment, OrderStatus orderStatus, User client, Product item) {
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.setClient(client);
+		items.add(item);
 	}
 
 	public long getId() {
