@@ -2,17 +2,17 @@ package com.example.cursoSpring.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.cursoSpring.entities.enums.OrderStatus;
@@ -36,19 +36,17 @@ public class Order implements Serializable{
 	@JoinColumn(name = "client_id")
 	private User client;
 	
-	@ManyToMany
-	@JoinColumn(name = "item_id")
-	private List<Product> items = new ArrayList<>();
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();	
 	
 	public Order() {
 	
 	}
 
-	public Order(Object object, Instant moment, OrderStatus orderStatus, User client, Product item) {
+	public Order(Object object, Instant moment, OrderStatus orderStatus, User client) {
 		this.moment = moment;
 		setOrderStatus(orderStatus);
 		this.setClient(client);
-		items.add(item);
 	}
 
 	public long getId() {
@@ -81,6 +79,10 @@ public class Order implements Serializable{
 	
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override

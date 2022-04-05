@@ -32,9 +32,6 @@ public class Product implements Serializable {
 	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 
-//	@JsonIgnore
-//	@ManyToMany(mappedBy = "items")
-//	private List<Order> orders = new ArrayList<>();
 
 	public Product() {
 
@@ -90,15 +87,6 @@ public class Product implements Serializable {
 	public Set<Category> getCategories() {
 		return categories;
 	}
-
-//	public List<Order> getOrders() {
-//		return orders;
-//	}
-//
-//	@Override
-//	public int hashCode() {
-//		return Objects.hash(categories, description, id, imgUrl, name, orders, price);
-//	}
 
 	@Override
 	public boolean equals(Object obj) {
